@@ -11,6 +11,7 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
+    "auto_install": True, # TRESCLOUD: Util para instalación automática desde el autoinstaller
     "depends": ["sale", "base_tier_validation"],
     "data": [
         "data/mail_data.xml",

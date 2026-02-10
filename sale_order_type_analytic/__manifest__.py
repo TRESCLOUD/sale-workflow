@@ -4,6 +4,7 @@
 # Copyright 2016 Lorenzo Battistini
 # Copyright 2016 Carlos Dauden <carlos.dauden@tecnativa.com>
 # Copyright 2018 David Vidal <david.vidal@tecnativa.com>
+# Copyright 2026 Trescloud - Steven Luna
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {

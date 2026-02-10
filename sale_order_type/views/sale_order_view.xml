@@ -12,6 +12,13 @@
                     readonly="state in ['sale', 'cancel'] or locked"
                 />
             </field>
+            <field name="journal_id" position="after">
+                <field name="analytic_distribution" 
+                       widget="analytic_distribution"
+                       groups="analytic.group_analytic_accounting"
+                       readonly="state in ['sale', 'cancel'] or locked"
+                />
+            </field>
         </field>
     </record>
 

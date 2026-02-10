@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 class SaleOrderTypology(models.Model):
     _name = "sale.order.type"
-    _inherit = 'analytic.mixin'
     _description = "Type of sale order"
     _check_company_auto = True
 

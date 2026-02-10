@@ -38,10 +38,6 @@
                                 name="analytic_account_id"
                                 groups="analytic.group_analytic_accounting"
                             />
-                            <field name="analytic_distribution" 
-                                widget="analytic_distribution"
-                                groups="analytic.group_analytic_accounting"
-                            />
                         </group>
                         <group>
                             <field name="journal_id" />

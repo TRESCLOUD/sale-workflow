@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: sale-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-26 09:59+0000\n"
-"PO-Revision-Date: 2026-01-29 12:09+0000\n"
+"PO-Revision-Date: 2026-05-25 20:58+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-sale-workflow-8-0/"
 "language/it/)\n"
@@ -20,9 +20,37 @@ msgstr ""
 "X-Generator: Weblate 5.15.2\n"
 
 #. module: sale_order_lot_selection
+#: model:ir.model,name:sale_order_lot_selection.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: sale_order_lot_selection
+#: model:ir.model,name:sale_order_lot_selection.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni configurazione"
+
+#. module: sale_order_lot_selection
 #: model:ir.model.fields,field_description:sale_order_lot_selection.field_sale_order_line__domain_lot_id
 msgid "Domain Lot"
 msgstr "Lotto dominio"
+
+#. module: sale_order_lot_selection
+#: model:ir.model.fields,field_description:sale_order_lot_selection.field_res_company__sale_order_lot_selection_exclude_pending_orders
+#: model:ir.model.fields,field_description:sale_order_lot_selection.field_res_config_settings__sale_order_lot_selection_exclude_pending_orders
+#: model_terms:ir.ui.view,arch_db:sale_order_lot_selection.res_config_settings_view_form
+msgid "Exclude pending orders from the lot selection"
+msgstr "Escludere gli ordini in sospeso dalla selezione del lotto"
+
+#. module: sale_order_lot_selection
+#: model:ir.model.fields,help:sale_order_lot_selection.field_res_company__sale_order_lot_selection_exclude_pending_orders
+#: model:ir.model.fields,help:sale_order_lot_selection.field_res_config_settings__sale_order_lot_selection_exclude_pending_orders
+#: model_terms:ir.ui.view,arch_db:sale_order_lot_selection.res_config_settings_view_form
+msgid ""
+"If this checkbox is selected, serials that can be selected with pending "
+"sales orders will be excluded"
+msgstr ""
+"Se questa casella di controllo è selezionata, verranno esclusi i numeri di "
+"serie selezionabili con ordini di vendita in sospeso"
 
 #. module: sale_order_lot_selection
 #: model:ir.model.fields,field_description:sale_order_lot_selection.field_sale_order_line__lot_id
@@ -47,6 +75,11 @@ msgid "Sales Analysis Report"
 msgstr "Resoconto analisi vendite"
 
 #. module: sale_order_lot_selection
+#: model:ir.model,name:sale_order_lot_selection.model_sale_order
+msgid "Sales Order"
+msgstr "Ordine di vendita"
+
+#. module: sale_order_lot_selection
 #: model:ir.model,name:sale_order_lot_selection.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Riga ordine di vendita"
@@ -54,7 +87,13 @@ msgstr "Riga ordine di vendita"
 #. module: sale_order_lot_selection
 #: model:ir.model,name:sale_order_lot_selection.model_stock_move
 msgid "Stock Move"
-msgstr "Movimenti magazzino"
+msgstr "Movimento di magazzino"
+
+#. module: sale_order_lot_selection
+#. odoo-python
+#: code:addons/sale_order_lot_selection/models/sale_order.py:0
+msgid "The serial number %(serial)s is not available"
+msgstr "Il numero di serie %(serial)s non è disponibile"
 
 #. module: sale_order_lot_selection
 #. odoo-python
@@ -65,6 +104,3 @@ msgid ""
 msgstr ""
 "Non si può modificare il numero di lotto/seriale perché sono già state "
 "eseguiti dei movimenti di magazzino."
-
-#~ msgid "Sales Order"
-#~ msgstr "Ordine di vendita"

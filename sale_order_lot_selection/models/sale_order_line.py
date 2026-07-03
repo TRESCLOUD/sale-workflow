@@ -39,6 +39,28 @@ class SaleOrderLine(models.Model):
         for sol in self:
             sol.product_tracking = sol.product_id.tracking or sol.product_tracking
 
+    def _get_lot_id_quant_domain_locations(self):
+        """This method retrieves the location(s) that will later be used in
+        _domain_lot_id_quant_domain(). It will be useful to extend this method if,
+        for example, you want to search across different multi-warehouse
+        locations.
+        """
+        self.ensure_one()
+        return self.warehouse_id.lot_stock_id
+
+    def _domain_lot_id_quant_domain(self):
+        """This method defines the domain that will be used to obtain the appropriate
+        stock.quant values and is useful for extending to other modules.
+        """
+        self.ensure_one()
+        locations = self._get_lot_id_quant_domain_locations()
+        return [
+            ("product_id", "=", self.product_id.id),
+            ("quantity", ">=", self.product_uom_qty),
+            ("lot_id", "!=", False),
+            ("location_id", "child_of", locations.ids),
+        ]
+
     @api.depends("product_id", "product_uom_qty", "warehouse_id")
     def _compute_domain_lot_id(self):
         dp = self.env["decimal.precision"].precision_get("Product Unit of Measure")
@@ -49,13 +71,7 @@ class SaleOrderLine(models.Model):
                 # corresponding stock.quant record is selected directly, so we
                 # use the same filters that are used.
                 quants = self.env["stock.quant"].search(
-                    [
-                        ("product_id", "=", sol.product_id.id),
-                        ("quantity", ">=", sol.product_uom_qty),
-                        ("lot_id", "!=", False),
-                        ("location_id.usage", "=", "internal"),
-                        ("location_id.warehouse_id", "=", sol.warehouse_id.id),
-                    ]
+                    sol._domain_lot_id_quant_domain()
                 )
                 available_quants = quants.filtered(
                     lambda x, qty=sol.product_uom_qty: float_compare(
@@ -65,7 +81,25 @@ class SaleOrderLine(models.Model):
                     )
                     >= 0
                 )
-                domain = [("id", "in", available_quants.mapped("lot_id").ids)]
+                available_lots = available_quants.mapped("lot_id")
+                if (
+                    sol.company_id.sale_order_lot_selection_exclude_pending_orders
+                    and sol.product_tracking == "serial"
+                ):
+                    available_lots -= (
+                        self.env["sale.order.line"]
+                        .sudo()
+                        .search(
+                            [
+                                ("state", "in", ("draft", "sent")),
+                                ("lot_id", "!=", False),
+                                ("product_uom_qty", ">", 0),
+                                ("id", "!=", sol._origin.id or 0),
+                            ]
+                        )
+                        .mapped("lot_id")
+                    )
+                domain = [("id", "in", available_lots.ids)]
             sol.domain_lot_id = domain
 
     @api.depends("product_id")
